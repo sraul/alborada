@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]>
+
+<hibernate-mapping>
+
+	<class name="com.yhaguy.domain.Cobrador" table="cobrador">
+
+		&hibernate-domain; 
+
+		<property name="nombre"/>
+		<property name="direccion"/>
+		<property name="telefono"/>
+		<property name="comision"/>
+				
+	</class>
+</hibernate-mapping>

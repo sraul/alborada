@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]>
+
+<hibernate-mapping>
+
+	<class name="com.yhaguy.domain.DebitoComandado" table="debito_comandado">
+
+		&hibernate-domain; 
+
+		<property name="ITIREG"/>
+		<property name="ITITRA"/>
+		<property name="ICDSRV"/>
+		<property name="ICTDEB"/>
+		<property name="IBCOCR"/>
+		<property name="ICTCRE"/>		
+		<property name="ITCRDB"/>		
+		<property name="IORDEN"/>
+		<property name="IMONED"/>
+		<property name="IMTOTR"/>
+		<property name="IMTOT2"/>
+		<property name="INRODO"/>
+		<property name="ITIFAC"/>
+		<property name="INRFAC"/>
+		<property name="INRCUO"/>
+		<property name="IFCHCR"/>
+		<property name="IFCHC2"/>
+		<property name="ICEPTO"/>
+		<property name="INRREF"/>
+		<property name="IFECCA"/>
+		<property name="IHORCA"/>
+		<property name="IUSUCA"/>
+		<property name="IFCHCR_"/>
+		
+		<many-to-one name="paciente" class="com.yhaguy.domain.Cliente"
+			column="id_paciente" lazy="false"/>	
+				
+	</class>
+</hibernate-mapping>

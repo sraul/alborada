@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]>
+
+<hibernate-mapping>
+
+	<class name="com.yhaguy.domain.Comisiones" table="comisiones">
+
+		&hibernate-domain; 
+
+		<property name="cedula"/>
+		<property name="nombre_apellido"/>
+		<property name="fecha_vencimiento"/>
+		<property name="nro_cuota"/>
+		<property name="importe"/>
+		<property name="vendedor"/>
+		<property name="celular"/>
+		<property name="celular_2"/>
+		<property name="tel_particular"/>
+		<property name="tel_particular_2"/>
+		<property name="tel_laboral"/>
+		<property name="tel_laboral_2"/>
+				
+	</class>
+</hibernate-mapping>

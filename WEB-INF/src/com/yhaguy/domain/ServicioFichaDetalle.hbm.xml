@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]>
+
+<hibernate-mapping>
+
+	<class name="com.yhaguy.domain.ServicioFichaDetalle" table="servicio_ficha_detalle">
+
+		&hibernate-domain; 
+		
+		<property name="fecha"/>
+		<property name="diente"/>
+		<property name="tratamiento"/>
+		<property name="doctor"/>
+		<property name="tipo_1"/>
+		<property name="tipo_2"/>
+		<property name="tipo_3"/>
+		<property name="tipo_4"/>
+		<property name="pagoGs"/>
+		<property name="presupuestoGs"/>
+				
+	</class>
+</hibernate-mapping>

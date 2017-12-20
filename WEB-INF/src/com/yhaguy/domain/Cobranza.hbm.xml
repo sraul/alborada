@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]>
+
+<hibernate-mapping>
+
+	<class name="com.yhaguy.domain.Cobranza" table="alb_cobranza">
+
+		&hibernate-domain; 
+		
+		<property name="fecha"/>
+		<property name="numero"/>
+		<property name="observacion"/>		
+		<property name="importeGs"/>
+		
+		<many-to-one name="cliente" class="com.yhaguy.domain.Cliente"
+			column="id_cliente" lazy="false" />		
+			
+		<many-to-one name="cobrador" class="com.yhaguy.domain.Cobrador"
+			column="id_cobrador" lazy="false" />
+			
+		<many-to-one name="bocaCobranza" class="com.coreweb.domain.Tipo"
+			column="id_bocacobranza" lazy="false" />
+			
+		<set name="detalles" table="alb_cobranza_detalle"
+			inverse="false" lazy="false" fetch="join" cascade="all">
+			<key>
+				<column name="id_cobranza" not-null="false"/>
+			</key>
+			<one-to-many entity-name="com.yhaguy.domain.Cobranza"/>
+		</set>
+				
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]>
+
+<hibernate-mapping>
+
+	<class name="com.yhaguy.domain.ServicioFicha" table="servicio_ficha">
+
+		&hibernate-domain; 
+		
+		<property name="numero"/>
+		<property name="sucursal"/>	
+		<property name="telefono"/>
+		
+		<many-to-one name="cliente" class="com.yhaguy.domain.Cliente"
+			column="id_cliente" lazy="false" />	
+			
+		<set name="detalles" table="servicio_ficha_detalle"
+			inverse="false" lazy="false" fetch="join" cascade="all">
+			<key>
+				<column name="id_ficha" not-null="false"/>
+			</key>
+			<one-to-many entity-name="com.yhaguy.domain.ServicioFichaDetalle"/>
+		</set>
+				
+	</class>
+</hibernate-mapping>

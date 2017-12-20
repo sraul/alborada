@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//hibernate/hibernate Mapping DTD 3.0//EN"
+        "classpath://org/hibernate/hibernate-mapping-3.0.dtd"
+        [ <!ENTITY hibernate-domain SYSTEM "classpath://com/coreweb/hibernate-domain.hbm.xml"> ]
+        >
+
+<hibernate-mapping>
+
+	<class name="com.yhaguy.domain.Cliente" table="cliente">
+
+		&hibernate-domain;
+
+		<property name="ventaCredito">
+			<column name="ventaCredito" default="false" />
+		</property>
+
+		<property name="limiteCredito">
+			<column name="limiteCredito" default="0" />
+		</property>
+		
+		<property name="fecha_nac" />
+		<property name="dir_particular" />
+		<property name="tel_particular" />
+		<property name="tel_particular2" />
+		<property name="celular" />
+		<property name="celular2" />
+		<property name="tel_laboral" />
+		<property name="tel_laboral2" />
+		<property name="zona" />
+		<property name="sub_zona" />
+		<property name="lug_trabajo" />
+		<property name="sec_trabajo" />
+		<property name="div_trabajo" />
+		<property name="dir_trabajo" />
+		<property name="seccion" />
+		<property name="turno" />
+		<property name="barrio" />
+		<property name="nivel_economico" />
+		<property name="nro_adh" />
+		
+		<many-to-one name="empresa" class="com.yhaguy.domain.Empresa"
+			column="idempresa" lazy="false" cascade="all" />
+
+		<many-to-one name="estadoCliente" class="com.coreweb.domain.Tipo"
+			column="idestado" lazy="false" />
+		<many-to-one name="categoriaCliente" class="com.coreweb.domain.Tipo"
+			column="idcategoria" lazy="false" />
+		<many-to-one name="tipoCliente" class="com.coreweb.domain.Tipo"
+			column="idtipocliente" lazy="false" />
+
+		<many-to-one name="cuentaContable" class="com.yhaguy.domain.CuentaContable"
+			column="idCuentaContable" lazy="false" />
+			
+		<many-to-one name="cobrador" class="com.yhaguy.domain.Funcionario"
+			column="idCobrador" lazy="false" />
+		
+		<set name="contactosInternos" table="contactoInterno" inverse="false"
+			lazy="false" fetch="join" cascade="all">
+			<key>
+				<column name="idcliente" not-null="false" />
+			</key>
+			<one-to-many entity-name="com.yhaguy.domain.ContactoInterno"></one-to-many>
+		</set>
+
+	</class>
+</hibernate-mapping>
