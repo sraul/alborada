@@ -1,0 +1,65 @@
+Empresa, Alborada
+,,,,
+nombre,direccion,telefono,comision
+Administracion,"Buenos Aires 212",591-717,0
+"BANCO CONTINENTAL","Estrella y 14 de mayo"," ",4
+"Particulares - Victor",Administracion,591-717,0
+"Facultad de Economia","Campus Universitario San Lorenzo"," ",5
+"Aso Funcionarios Union S.R.L.","Fdo. de la Mora"," ",5
+"Fac. de Ciencias Agrarias","Campus Universitario U.N.A.",0,5
+SITRAFUMEC,"15 de agosto c/ Piribebuy",0,10
+"BANCO NACIONAL DE FOMENTO","Mcal. Lopez c/ San MArtin",602-333,5.5
+AFOMUSAL,"Espanha esq. San Lorenzo"," ",5
+"Policia Nacional","Chile esq. El Paraguayo Independiente"," ",10
+SINOEMA,Asuncion,,10
+SITRAMA,"Municipalidad de Asuncion"," ",5
+SINATRAN,"Municipalidad de Asuncion"," ",5
+"Cooperativa 5 de Octubre",M.O.P.C.," ",7
+Bancard,Brasilia," ",5
+SIFOMFM,"Fernando de la Mora"," ",10
+"BANCO SUDAMERIS"," "," ",0
+"ASO AJVIERCI"," "," ",0
+"ASO DIMABEL"," "," ",0
+"ASO DINATRAM"," "," ",0
+"ASO SUGAR"," "," ",0
+Tratamientos," "," ",0
+"Administracion - Carapegua    ",NULL,NULL,0
+"Administracion - Luque        ",NULL,NULL,0
+"Hector Amarilla               ",NULL,NULL,0
+"JULIO BERNAL                  ",NULL,NULL,0
+"ASO E.L.P.E.S.A               ",NULL,NULL,0
+"Tratamientos Carapegua        ",NULL,NULL,0
+"RAFAEL ADORNO",NULL,NULL,0
+"Pago Inicial                  ",NULL,NULL,0
+"Elioth David Sosa Gonzalez    ",NULL,NULL,10
+"Recuperable                 ",NULL,NULL,0
+"Administracion nhemby          ",NULL,NULL,0
+"Tratamiento - Luque           ",NULL,NULL,0
+"Tratamiento - nhemby           ",NULL,NULL,0
+"MARCELO ESPINOLA",NULL,NULL,0
+"FARMA VITAL MED               ",NULL,NULL,0
+"ASO PARESA                    ",NULL,NULL,0
+"Administracion CDE            ",NULL,NULL,0
+"Tratamiento - CDE             ",NULL,NULL,0
+"RODY FIGUEREDO                ",NULL,NULL,0
+"Cobrador CARAPEGUA",NULL,NULL,0
+"COBRADOR FUNCIONARIO          ",NULL,NULL,0
+"NO CONTESTA                   ",NULL,NULL,0
+"COBRANZAS ATRASADOS           ",NULL,NULL,0
+"COBRADOR SAN LORENZO          ",NULL,NULL,0
+"MOROSOS                       ",NULL,NULL,0
+"NO CONTESTA                   ",NULL,NULL,0
+"PROMESA  DE PAGO              ",NULL,NULL,0
+"VOLVER A LLAMAR               ",NULL,NULL,0
+"POS BANCARD                   ",NULL,NULL,0
+"COBRANZA TRATAMIENTO          ",NULL,NULL,0
+"SERVICIO SANATORIAL           ",NULL,NULL,0
+"Administracion Limpio         ",NULL,NULL,0
+"Tratamientos Limpio           ",NULL,NULL,0
+"Cobrador San Lorenzo 2        ",NULL,NULL,0
+"DESCUENTO POR PAGO ADELANTADO.",NULL,NULL,0
+"Descontado                    ",NULL,NULL,0
+"JORGE GIMENEZ                 ",NULL,NULL,0
+"JAVIER GIMENEZ                ",NULL,NULL,0
+"BANCO ITAU                    ",NULL,NULL,5
+"MAXIMILIANO TALAVERA          ",NULL,NULL,0
