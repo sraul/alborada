@@ -1,0 +1,124 @@
+<zk>
+<window apply="org.zkoss.bind.BindComposer" height="100%"
+	viewModel="@id('vm') @init('com.yhaguy.gestion.rrhh.ComisionesVentasViewModel')"
+	id="win_" hflex="true">
+	<grid sclass="vgrid" style="margin-right:20px; margin-left:20px">
+		<rows>
+			<row>
+				<vlayout spacing="0">
+					<field value="Mes" />
+					<combobox placeholder="MES.." hflex="true"
+						model="@load(vm.meses)" selectedItem="@bind(vm.selectedMes)"
+						instant="true">
+						<template name="model">
+							<comboitem label="@load(each.pos2)"/>
+						</template>	
+					</combobox>
+				</vlayout>
+				<vlayout spacing="0">
+					<field value="Año" />
+					<combobox placeholder="AÑO.." hflex="true"
+						selectedItem="@bind(vm.selectedAnho)"
+						value="@load(vm.selectedAnho)"
+						model="@load(vm.anhos)">
+						<template name="model">
+							<comboitem label="@load(each)"/>
+						</template>	
+					</combobox>
+				</vlayout>
+			</row>
+		</rows>		
+	</grid>
+	<solicitarCabecera visible="@load(vm.selectedMes eq null? 'true':'false')" />
+	
+	<hlayout sclass="button-container" visible="@load(vm.selectedMes eq null? 'false':'true')"
+		style="margin-right:20px; margin-left:20px">
+		<button mold="bs" sclass="btn-primary btn-sm" label="Procesar Ventas/Cobranzas"
+			iconSclass="z-icon-cogs" width="215px"
+			disabled="@load(vm.comisiones.size() eq 0? 'false':'true')"
+			onClick="@command('procesarMovimientos_')">
+		</button>
+		<space></space>
+		<button mold="bs" sclass="btn-info btn-sm" label="Imprimir"
+			iconSclass="z-icon-print" width="200px"
+			disabled="@load(vm.selectedMes eq null? 'true':'false')"
+			onClick="@command('verReporte')">
+		</button>
+	</hlayout>
+	<vbox id="vl_coms" pack="start" align="center" width="97%" height="450px"
+		style="margin:20px; padding-right:10px; border-radius:8px"
+		visible="@load(vm.selectedMes eq null? 'false': (vm.comisiones.size() eq 0? 'true':'false'))"
+		onLater="@command('clearProgress')">
+		<label id="lb_msg" style="font-style:italic">PENDIENTE DE PROCESAR DATOS..</label>	
+	</vbox>
+	<vlayout children="@load(vm.comisiones)" style="margin:20px; padding-right:10px; overflow:auto" height="450px"
+		visible="@load(vm.selectedMes eq null? 'false':'true')">
+		<template name="children">
+			<div style="border-bottom: solid 1px silver">
+				<label value="@load(each[0])" style="font-weight:bold"></label>				
+			</div>
+			<listbox sclass="small-list" model="@load(each[1])">
+				<listhead>
+					<listheader label="Proveedor"/>
+					<listheader label="Contado" width="110px" align="right" />
+					<listheader label="%" width="50px" align="center" />
+					<listheader label="Comisión" width="110px" align="right" />
+					<listheader label="Cobrado" width="110px" align="right" />
+					<listheader label="%" width="50px" align="center" />
+					<listheader label="Comisión" width="110px" align="right" />
+					<listheader label="Saldo Gs." width="110px" align="right" />
+					<listheader label="Comisión Gs." width="110px" align="right" />
+				</listhead>
+				<template name="model" var="item">
+					<listitem>
+						<listcell label="@load(item.proveedor)"></listcell>
+						<listcell label="@load(item.importeVenta) @converter(vm.cnv.monedaLocal)"></listcell>
+						<listcell>
+							<doublebox value="@bind(item.porc_Venta)" vflex="true" hflex="true" 
+								style="background:#EEF7FA;text-align:right"
+								onChange="@command('updateComision', item=item, det=each)"/>
+						</listcell>
+						<listcell label="@load(item.comisionVenta) @converter(vm.cnv.monedaLocal)"
+							style="color:#357ebd"></listcell>
+						<listcell label="@load(item.importeCobro) @converter(vm.cnv.monedaLocal)"></listcell>
+						<listcell>
+							<doublebox value="@bind(item.porc_Cobro)" vflex="true" hflex="true" 
+								style="background:#EEF7FA;text-align:right"
+								onChange="@command('updateComision', item=item, det=each)"/>
+						</listcell>
+						<listcell label="@load(item.comisionCobro) @converter(vm.cnv.monedaLocal)"
+							style="color:#357ebd"></listcell>
+						<listcell label="@load(item.totalSaldoGs) @converter(vm.cnv.monedaLocal)"></listcell>
+						<listcell label="@load(item.totalComision) @converter(vm.cnv.monedaLocal)"
+							style="color:#357ebd"></listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<hlayout>
+				<field value="Premio Gs."/>
+				<guaranibox 
+							style="text-align:right;background:#EEF7FA;font-weight:bold" />
+				<space></space>
+				<label value="Meta Gs." style="color:#357ebd;font-weight:bold"></label>
+				<label value="@load(each[4]) @converter(vm.cnv.monedaLocal)" style="color:#357ebd"></label>
+				<space></space>
+				<label value="Vendido Gs." style="color:#4cae4c;font-weight:bold"></label>
+				<label value="@load(each[5]) @converter(vm.cnv.monedaLocal)" style="color:#357ebd"></label>
+				<space></space>
+				<label value="Saldo Gs." style="color:#eea236;font-weight:bold"></label>
+				<label value="@load(each[6]) @converter(vm.cnv.monedaLocal)" style="color:#357ebd"></label>				
+				<space hflex="true"></space>
+				<field value="Total Gs."/>
+				<guaranibox readonly="true" value="@load(each[2])"
+							style="text-align:right;background:#EEF7FA;font-weight:bold" />
+				<guaranibox readonly="true" value="@load(each[3])"
+							style="text-align:right;background:#EEF7FA;font-weight:bold" />
+			</hlayout>
+			<space></space>
+		</template>
+	</vlayout>
+	<style>
+		.z-doublebox { min-height: 20px }
+	</style>
+</window>
+</zk>

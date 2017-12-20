@@ -1,0 +1,179 @@
+<zk>
+	<window id="Body"
+		viewModel="@id('vm') @init('com.yhaguy.gestion.empresa.FuncionarioControlBody')"
+		apply="org.zkoss.bind.BindComposer" width="100%" height="100%">
+
+		<grid sclass="vgrid">
+			<rows>
+				<row>
+					<vbox>
+						<field value="Nombre Completo:" />
+						<textbox value="@bind(vm.dto.nombre)"
+							constraint="${vm.check.noVacio}" hflex="true" width="200px" />
+					</vbox>
+
+					<vbox>
+						<field value="C.I.:" />
+						<textbox value="@bind(vm.dto.ci)"
+							constraint="${vm.check.noVacio}" />
+					</vbox>
+
+					<vbox>
+						<field value="RUC:" />
+						<textbox value="@bind(vm.dto.ruc)" />
+					</vbox>
+
+					<vbox spacing="0">
+						<field value="Fecha Nacimiento: " />
+						<datebox value="@bind(vm.dto.fechaCumpleanhos)"
+							width="130px" style="text-align:center" format="dd-MM-yyyy" />
+					</vbox>
+
+					<vbox>
+						<field value="Dirección:" />
+						<textbox value="@bind(vm.dto.direccion)"
+							constraint="${vm.check.noVacio}" width="200px" hflex="true" />
+					</vbox>
+
+
+
+				</row>
+				<row>
+
+					<vbox>
+						<field value="Teléfono:" />
+						<textbox value="@bind(vm.dto.telefono)"
+							constraint="${vm.check.noVacio}" />
+					</vbox>
+
+					<vbox>
+						<field value="Correo Particular:" />
+						<textbox value="@bind(vm.dto.correoPersonal)" />
+					</vbox>
+					<vbox>
+						<field value="Correo de Funcionario" />
+						<textbox
+							value="@bind(vm.dto.correoFuncionario)" />
+					</vbox>
+
+					<vbox>
+						<field value="Estado Funcionario:" />
+						<combobox constraint="${vm.check.noVacio}"
+							selectedItem="@bind(vm.dto.funcionarioEstado)"
+							value="@load(vm.dto.funcionarioEstado)"
+							model="@load(vm.dtoUtil.funcionarioEstado)">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</vbox>
+
+
+					<vbox>
+						<field value="Cargo:" />
+						<combobox
+							model="@load(vm.dtoUtil.funcionarioCargo)"
+							value="@load(vm.dto.funcionarioCargo)"
+							selectedItem="@bind(vm.dto.funcionarioCargo)"
+							constraint="${vm.check.noVacio}">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</vbox>
+
+				</row>
+				<row>
+					<vbox spacing="0">
+						<field value="Fecha Ingreso: " />
+						<datebox value="@bind(vm.dto.fechaIngreso)"
+							width="130px" style="text-align:center" format="dd-MM-yyyy"
+							readonly="true" />
+					</vbox>
+					<vbox>
+						<field value="Obs:" />
+						<textbox value="@bind(vm.dto.observacion)"
+							width="200px" hflex="true" />
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+
+		<solicitarCabecera visible="@load(vm.dto.esNuevo)">
+		</solicitarCabecera>
+
+		<hlayout vflex="true" width="100%"
+			visible="@load(!vm.dto.esNuevo)">
+			<vbox vflex="true" width="50%">
+				<hbox sclass="button-container" width="100%"
+					style="margin:5px 2px 0px 2px">
+					<field value="Accesos del sistema"></field>
+				</hbox>
+				<listbox model="@load(vm.dto.accesos)" width="100%"
+					vflex="true" hflex="true"
+					selectedItem="@bind(vm.selectedAcceso)">
+					<listhead>
+						<listheader label="Usuarios Asignados"
+							align="center" />
+						<listheader label="Login" align="center" />
+						<listheader label="Departamento" align="center" />
+						<listheader label="Sucursal Operativa"
+							align="center" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="@load(each.usuario.pos1)" />
+							<listcell label="@load(each.usuario.pos2)" />
+							<listcell
+								label="@load(each.departamento.pos1)" />
+							<listcell
+								label="@load(each.departamento.pos2.text)" />
+						</listitem>
+
+					</template>
+				</listbox>
+				<hbox sclass="button-container" width="100%">
+					<button label="Agregar"
+						onClick="@command('agregarUsuario')" />
+					<button label="Eliminar"
+						onClick="@command('eliminarAcceso')" />
+				</hbox>
+			</vbox>
+
+			<vbox vflex="true" width="50%">
+				<hbox sclass="button-container" width="100%"
+					style="margin:5px 2px 0px 2px">
+					<field value="Sucursales Habilitadas por acceso"></field>
+				</hbox>
+				<listbox id="sucursales"
+					model="@load(vm.selectedAcceso.sucursales)" width="100%"
+					vflex="true" hflex="true"
+					selectedItem="@bind(vm.selectedSucursalHab)" multiple="true"
+					emptyMessage="Seleccione un acceso asignado">
+					<listhead>
+						<listheader label="Sucursal" />
+						<listheader label="Descripción" />
+						<listheader label="Establecimiento" />
+						<listheader label="Dirección" />
+						<listheader label="Teléfono" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="@load(each.pos1)" />
+							<listcell label="@load(each.pos2)" />
+							<listcell label="@load(each.pos3)" />
+							<listcell label="@load(each.pos4)" />
+							<listcell label="@load(each.pos5)" />
+						</listitem>
+					</template>
+				</listbox>
+				<hbox sclass="button-container" width="100%">
+					<button label="Agregar"
+						onClick="@command('agregarSucursalHab')" />
+					<button label="Eliminar Sucursal"
+						onClick="@command('eliminarSucursalHab')" />
+				</hbox>
+			</vbox>
+		</hlayout>
+	</window>
+</zk>

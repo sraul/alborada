@@ -1,0 +1,33 @@
+<div apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('com.yhaguy.gestion.contabilidad.ContableSimpleViewModel')"
+	style="padding:10px">
+
+	<grid sclass="vgrid">
+		<columns>
+			<column width="100px" />
+			<column />
+		</columns>
+		<rows>
+			<row>
+				<field value="Cuenta:" />
+				<hlayout>
+					<textbox hflex="true" placeholder="Cuenta.."/>
+					<button iconSclass="z-icon-search" />
+				</hlayout>
+			</row>
+			<row>
+				<field value="Descripción:" />
+				<textbox hflex="true" placeholder="Descripción.."/>
+			</row>
+			<row>
+				<field value="Debe:" />
+				<guaranibox />
+			</row>
+			<row>
+				<field value="Haber:" />
+				<guaranibox />
+			</row>
+		</rows>
+	</grid>
+
+</div>

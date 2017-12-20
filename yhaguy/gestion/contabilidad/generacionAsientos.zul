@@ -1,0 +1,165 @@
+<window apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.yhaguy.gestion.contabilidad.ContableGeneracionAsientosViewModel')"
+	height="100%"
+	id="win"
+	onLater="@command('clearProgress')">
+	
+	<hbox hflex="true" vflex="true">	
+	<vbox hflex="true" vflex="true" spacing="0" pack="center" style="padding:0px 20px 20px 20px">
+		
+		<label value="VENTAS CONTADO" style="margin-left:10px;font-weight:bold;text-align:right"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>		
+		<label value="VENTAS CRÉDITO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."
+				value="@bind(vm.desde1)"></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."
+				value="@bind(vm.hasta1)"></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"
+				onClick="@command('generarAsientosVentaCredito')"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="NOTAS DE CRÉDITO VENTA CONTADO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="NOTAS DE CRÉDITO VENTA CRÉDITO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">
+			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="COMPRAS CONTADO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">
+			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="COMPRAS CRÉDITO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+	</vbox>
+	
+	<vbox hflex="true" vflex="true" spacing="0" pack="center" style="padding:0px 20px 20px 20px">
+	
+		<label value="GASTOS CONTADO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="GASTOS CRÉDITO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="NOTAS DE CRÉDITO COMPRA CONTADO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">
+			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="NOTAS DE CRÉDITO COMPRA CRÉDITO" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">
+			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="COBRANZAS" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>
+		
+		<space></space>
+		<label value="PAGOS" style="margin-left:10px;font-weight:bold"></label>
+		<div hflex="true" style="border-bottom: solid 1px; margin:0px 10px 0px 10px"></div>
+		<hlayout sclass="button-container">			
+			<datebox placeholder="Desde.."></datebox>
+			<space></space>
+			<datebox placeholder="Hasta.."></datebox>
+			<space hflex="true"></space>
+			<toolbarbutton image="/core/images/generate.png"
+				label="Generar Asientos"></toolbarbutton>
+		</hlayout>	
+	</vbox>	
+	</hbox>	
+</window>

@@ -1,0 +1,7 @@
+<div apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.yhaguy.gestion.reportes.ReportesSimpleVM')"
+	style="padding:10px">
+	
+	<include src="@load(vm.parametroZul)"></include>
+
+</div>

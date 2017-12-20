@@ -1,0 +1,187 @@
+<window apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.yhaguy.gestion.alborada.servicios.ServiciosPlanesViewModel')"
+	height="100%">	
+	<div height="5px" />
+	<hlayout sclass="button-container">
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-plus-circle"
+				label=" Agregar" onClick='pop_add.open(self,"after_start")'/>
+		<space></space>
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-edit"
+				label=" Modificar" />
+		<space></space>
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-times-circle"
+				label=" Eliminar" />
+	</hlayout>
+	
+	<hbox vflex="true">
+	<listbox sclass="small-list" vflex="true"
+		emptyMessage="INGRESE UN CRITERIO DE BÚSQUEDA.."
+		model="@load(vm.planes)" selectedItem="@bind(vm.selectedPlan)"
+		hflex="1">
+		<listhead>
+			<listheader label="Código" width="150px" />
+			<listheader label="Descripción" />
+		</listhead>	
+		<auxhead>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Código.."
+						sclass="filter"
+						instant="true" readonly="true" />
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Descripción.."
+						sclass="filter"
+						instant="true"
+						readonly="true"/>
+				</hlayout>
+			</auxheader>
+		</auxhead>
+		<template name="model">
+			<listitem>
+				<listcell label="@load(each.codigo)"></listcell>
+				<listcell label="@load(each.descripcion)"></listcell>
+			</listitem>
+		</template>
+		<listfoot>
+			<listfooter span="2">
+				<hlayout hflex="true">
+					<field value="ítems" />
+				</hlayout>
+			</listfooter>
+		</listfoot>
+	</listbox>
+	
+	<listbox sclass="small-list" model="@load(vm.selectedPlan.detalles)"
+			vflex="true" emptyMessage="SELECCIONE UN PLAN.."
+			hflex="2">
+			<auxhead>
+				<auxheader colspan="4" label="Servicios"></auxheader>
+			</auxhead>
+			<listhead>
+				<listheader label="Código" width="100px"></listheader>
+				<listheader label="Especialidad" width="200px"></listheader>
+				<listheader label="Descripción"></listheader>
+				<listheader label="Precio Gs." width="100px" align="right"></listheader>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.articulo.codigoInterno)"/>
+					<listcell label="@load(each.articulo.articuloFamilia.descripcion)"/>
+					<listcell label="@load(each.articulo.descripcion)"/>
+					<listcell label="@load(each.precioGs) @converter(vm.cnv.monedaLocal)"/>
+				</listitem>
+			</template>
+			<listfoot>
+				<listfooter>
+					<hlayout>
+						<field value="ítems"/>
+					</hlayout>
+				</listfooter>
+			</listfoot>
+	</listbox>
+	</hbox>
+	
+	<popup id="pop_add" sclass="rounded">
+		<vlayout width="800px" height="400px">
+			<grid sclass="vgrid">
+				<rows>
+					<row>
+						<vlayout spacing="0">
+							<field value="Código" />
+							<textbox hflex="true" value="@bind(vm.n_servicio_plan.codigo)"></textbox>
+						</vlayout>
+						<vlayout spacing="0">
+							<field value="Descripción" />
+							<textbox hflex="true" value="@bind(vm.n_servicio_plan.descripcion)"></textbox>
+						</vlayout>
+					</row>
+				</rows>
+			</grid>
+			<listbox sclass="small-list" vflex="true"
+				model="@load(vm.n_servicio_plan.detalles)">
+				<listhead>
+					<listheader label="Código" width="100px"></listheader>
+					<listheader label="Especialidad" width="100px"></listheader>
+					<listheader label="Descripción"></listheader>
+					<listheader label="Precio Gs." width="100px" align="right"></listheader>
+					<listheader width="50px"></listheader>
+				</listhead>
+				<auxhead>
+					<auxheader colspan="3">
+						<bandbox hflex="true" placeholder="Servicio.."
+							readonly="true"
+							value="@load(vm.n_detalle.articulo.descripcion)"
+							id="bndArti">
+							<bandpopup>
+								<listbox sclass="small-list"
+									width="630px" height="250px"
+									model="@load(vm.servicios)"
+									selectedItem="@bind(vm.n_detalle.articulo)"
+									onSelect="bndArti.close()">
+									<listhead>
+										<listheader>
+											<textbox hflex="true" sclass="filter"
+													value="@bind(vm.filter_codigo)" instant="true"
+													placeholder="Código.." />
+										</listheader>
+										<listheader>
+											<textbox hflex="true" sclass="filter"
+													value="@bind(vm.filter_descripcion)" instant="true"
+													placeholder="Descripción.." />
+										</listheader>
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="@load(each.codigoInterno)"></listcell>
+											<listcell label="@load(each.descripcion)"></listcell>
+										</listitem>
+									</template>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+					</auxheader>
+					<auxheader>
+						<guaranibox hflex="true"
+							value="@bind(vm.n_detalle.precioGs)"/>
+					</auxheader>
+					<auxheader>
+						<button iconSclass="z-icon-plus" onClick="@command('addItem')"/>
+					</auxheader>
+				</auxhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.articulo.codigoInterno)"/>
+						<listcell label="@load(each.articulo.articuloFamilia.descripcion)"/>
+						<listcell label="@load(each.articulo.descripcion)"/>
+						<listcell label="@load(each.precioGs) @converter(vm.cnv.monedaLocal)"/>
+						<listcell></listcell>
+					</listitem>
+				</template>
+				<listfoot>
+					<listfooter>
+						<hlayout>
+							<field value="ítems"/>
+						</hlayout>
+					</listfooter>
+				</listfoot>
+			</listbox>
+			<hbox style="padding:5px" align="end" hflex="true" pack="end">
+				<button mold="bs" sclass="btn-success btn-sm"
+					iconSclass="z-icon-check" width="100px"
+					onClick="@command('addPlan', comp=pop_add)"/>
+			</hbox>
+		</vlayout>
+	</popup>
+	
+	<style>
+		.custom-tbox {margin-right:5px; background:lightyellow}
+	</style>
+</window>

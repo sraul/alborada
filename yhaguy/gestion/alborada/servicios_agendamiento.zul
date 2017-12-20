@@ -1,0 +1,186 @@
+<window apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.yhaguy.gestion.alborada.servicios.ServiciosAgendamientoViewModel')"
+	height="100%">	
+	<div height="5px" />
+	<hlayout sclass="button-container">
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-plus-circle"
+				label=" Agregar" onClick="@command('newControlAtencion', parent=self, comp=pop_add)"/>
+		<space></space>
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-edit"
+				label=" Modificar" />
+		<space></space>
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-times-circle"
+				label=" Eliminar" />
+		<space></space>
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-print"
+				label=" Imprimir Listado" />
+	</hlayout>
+	
+	<listbox sclass="small-list" vflex="true"
+		emptyMessage="INGRESE UN CRITERIO DE BÚSQUEDA.."
+		model="@load(vm.controlAtenciones)">
+		<listhead>
+			<listheader label="Fecha" />
+			<listheader label="Hora" />
+			<listheader label="Paciente" />
+			<listheader label="Contrato" />
+			<listheader label="Tratamiento" />
+			<listheader label="Realizado" width="80px" align="center"/>
+		</listhead>	
+		<auxhead>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true"  
+						placeholder="Día"
+						value="@bind(vm.filterFechaDD)"
+						instant="true"
+						sclass="filter"/>
+					<textbox hflex="true"  
+						placeholder="Mes"
+						value="@bind(vm.filterFechaMM)"
+						instant="true"
+						sclass="filter"/>
+					<textbox hflex="true"  
+						placeholder="Año"
+						value="@bind(vm.filterFechaAA)"
+						instant="true"
+						sclass="filter"/>
+				</hlayout>
+			</auxheader>
+			<auxheader/>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Paciente.."
+						sclass="filter"
+						instant="true"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Contrato.."
+						sclass="filter"
+						instant="true"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Tratamiento.."
+						sclass="filter"
+						instant="true"/>
+				</hlayout>
+			</auxheader>
+			<auxheader />
+		</auxhead>
+		<template name="model">
+			<listitem>
+				<listcell label="@load(each.fecha) @converter('formattedDate', format='dd-MM-yyyy')"></listcell>
+				<listcell label="@load(each.fecha) @converter('formattedDate', format='hh:mm:ss')"></listcell>
+				<listcell label="@load(each.paciente.razonSocial)"></listcell>
+				<listcell label="@load(each.contrato.numero)"></listcell>
+				<listcell label="@load(each.descripcion)"></listcell>
+				<listcell onDoubleClick="@command('realizarAtencion', item=each)">
+					<label sclass="@load(each.realizado? 'label label-success' : 'label label-danger')" style="font-size:11px"
+						value="@load(each.realizado? 'SI' : 'NO')"></label>
+				</listcell>
+			</listitem>
+		</template>
+		<listfoot>
+			<listfooter span="2">
+				<hlayout hflex="true">
+					<field value="ítems" />
+				</hlayout>
+			</listfooter>
+		</listfoot>
+	</listbox>
+	
+	<popup id="pop_add" sclass="rounded">
+		<vlayout width="800px">
+			<grid sclass="vgrid">
+				<rows>
+					<row>
+						<vlayout spacing="0">
+							<field value="Fecha" />
+							<datebox hflex="true" value="@bind(vm.n_controlatencion.fecha)"></datebox>
+						</vlayout>
+						<vlayout spacing="0">
+							<field value="Hora" />
+							<timebox value="@bind(vm.n_controlatencion.fecha)" hflex="true"></timebox>
+						</vlayout>
+					</row>
+					<row>
+						<vlayout spacing="0">
+							<field value="Paciente" />
+							<bandbox hflex="true" placeholder="Paciente.." readonly="true" id="bnd" 
+								value="@load(vm.n_controlatencion.paciente.razonSocial)">
+							<bandpopup>
+								<listbox sclass="small-list"
+									width="800px" height="250px"
+									onSelect="bnd.close()"
+									model="@load(vm.pacientes)"
+									selectedItem="@bind(vm.n_controlatencion.paciente)">
+									<listhead>
+										<listheader width="150px">
+											<textbox hflex="true" sclass="filter" instant="true"
+													placeholder="Cédula.." 
+													value="@bind(vm.filter_cedula)"/>
+										</listheader>
+										<listheader>
+											<textbox hflex="true" sclass="filter" instant="true"
+													placeholder="Nombre y Apellido.." 
+													value="@bind(vm.filter_razonsocial)"/>
+										</listheader>
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="@load(each.ruc)"/>
+											<listcell label="@load(each.razonSocial)"/>
+										</listitem>
+									</template>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+						</vlayout>
+						<vlayout spacing="0">
+							<field value="Contrato Vigente" />
+							<combobox 
+								value="@load(vm.n_controlatencion.contrato.numero)"
+								model="@load(vm.n_controlatencion.paciente.contratosVigentes)"
+								selectedItem="@bind(vm.n_controlatencion.contrato)"
+								instant="true" hflex="true">
+								<template name="model">
+									<comboitem label="@load(each.numero)"/>
+								</template>
+							</combobox>
+						</vlayout>						
+					</row>
+					<row>
+						<cell colspan="2">
+							<vlayout>
+								<field value="Tratamiento"/>
+								<textbox value="@bind(vm.n_controlatencion.descripcion)" hflex="true"></textbox>
+							</vlayout>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<space></space>
+			<hbox style="padding:5px" align="end" hflex="true" pack="end">
+				<button mold="bs" sclass="btn-primary btn-sm"
+					iconSclass="z-icon-check" width="150px" 
+					label="Guardar" 
+					onClick="@command('addControlAtencion', comp=pop_add)"/>
+			</hbox>
+		</vlayout>
+	</popup>
+	
+	<style>
+		.custom-tbox {margin-right:5px; background:lightyellow}
+	</style>
+</window>

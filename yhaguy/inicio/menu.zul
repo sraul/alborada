@@ -1,0 +1,127 @@
+<zk>
+	<menubar id="menubar" visible="@load(vm.menuVisible)">
+
+		<menu label=" Tesorería" iconSclass="z-icon-briefcase">
+			<menupopup sclass="rounded">
+
+				<zk forEach="${vm.menuItem(self,'Caja')}" />
+				<zk forEach="${vm.menuItem(self,'CajaPlanilla')}" />
+				<zk forEach="${vm.menuItem(self,'CajaPlanillaResumen')}" />
+				<menuseparator />
+				<zk forEach="${vm.menuItem(self,'CuentasCobrar')}" />
+				<zk forEach="${vm.menuItem(self,'CuentasPagar')}" />
+				<zk forEach="${vm.menuItem(self,'GestionCobro')}" />
+				<menuseparator />
+				<zk forEach="${vm.menuItem(self,'Recibos')}" />
+				<zk forEach="${vm.menuItem(self,'Pagos')}" />
+				<menuseparator />
+				<zk forEach="${vm.menuItem(self,'DebitosComandados')}" />
+				<zk forEach="${vm.menuItem(self,'Cheques')}" />
+				<zk forEach="${vm.menuItem(self,'ChequesTerceros')}" />	
+				<zk forEach="${vm.menuItem(self,'BancoBoletaDeposito') }" />				
+				<zk forEach="${vm.menuItem(self,'BancoDebito') }" />
+				<zk forEach="${vm.menuItem(self,'BancoDescuentoCheque', 'tipo=descuento') }" />	
+				<zk forEach="${vm.menuItem(self,'BancoAnticipoUtilidad', 'tipo=anticipo') }" />		
+				<zk forEach="${vm.menuItem(self,'BancoPrestamoCheque', 'tipo=prestamo') }" />	
+				<zk forEach="${vm.menuItem(self,'BancoEnvioCheques', 'tipo=envio') }" />	
+				<zk forEach="${vm.menuItem(self,'BancoConciliacion') }" />
+				<zk forEach="${vm.menuItem(self,'LibroBanco')}" />
+			</menupopup>
+		</menu>
+
+		<menu label="Compras" iconSclass="z-icon-shopping-cart">
+			<menupopup sclass="rounded">
+				<zk forEach="${vm.menuItem(self,'Proveedor')}" />
+				<menuseparator />
+				<zk forEach="${vm.menuItem(self,'CompraLocal')}" />
+				<zk forEach="${vm.menuItem(self,'Importacion')}" />
+				<zk	forEach="${vm.menuItem(self,'NotaCreditoCompra', 'tipo=compra')}" />
+				<menuseparator />
+				<zk forEach="${vm.menuItem(self,'OrdenPedidoGasto')}" />
+				<zk forEach="${vm.menuItem(self,'ExploradorGastos')}" />
+				<zk forEach="${vm.menuItem(self,'OrdenCompra')}" />
+				<menuseparator />
+				
+				<zk forEach="${vm.menuItem(self,'TesakaRetenciones')}" />
+				
+				<zk
+					forEach="${vm.menuItem(self, 'CompraDefiniciones')}" />
+			</menupopup>
+		</menu>
+
+		<menu label=" Gestión" iconSclass="z-icon-stethoscope">
+			<menupopup sclass="rounded">
+				<zk forEach="${vm.menuItem(self,'Pacientes')}" />
+				<zk forEach="${vm.menuItem(self,'ServiciosControlAtencion')}" />
+				<zk forEach="${vm.menuItem(self,'ServiciosAgendamiento')}" />
+				<menuseparator />
+				<zk forEach="${vm.menuItem(self,'Servicios')}" />
+				<menuitem label="SERVICIOS / TRATAMIENTOS" iconSclass="z-icon-caret-right" disabled="true"/>
+				<zk forEach="${vm.menuItem(self,'ServiciosPlanes')}" />
+				<zk forEach="${vm.menuItem(self,'ServiciosContratos')}" />
+				<menuseparator />
+				<zk forEach="${vm.menuItem(self,'Comisiones')}" />
+			</menupopup>
+		</menu>
+
+		<menu label="RRHH" iconSclass="z-icon-user">
+			<menupopup sclass="rounded">
+
+				<zk forEach="${vm.menuItem(self,'Funcionarios')}" />
+				<zk forEach="${vm.menuItem(self,'FuncionarioCtaCte')}" />
+				<zk forEach="${vm.menuItem(self,'ComisionesVentas')}" />
+				<menuitem label="EVALUACIÓN DEL PERSONAL" iconSclass="z-icon-caret-right" disabled="true"/>
+			</menupopup>
+		</menu>
+
+		<menu label="Contable" iconSclass="z-icon-bar-chart-o">
+			<menupopup sclass="rounded">
+				<!-- <zk forEach="${vm.menuItem(self,'Asientos')}" />
+				<zk forEach="${vm.menuItem(self,'GeneracionAsientos')}" /> -->
+				<zk forEach="${vm.menuItem(self, 'CompraDefiniciones')}" />
+				<menuitem label="ASIENTOS" disabled="true" />
+				<menuitem label="LIBRO DIARIO" disabled="true" />
+				<menuitem label="LIBRO COMPRAS" disabled="true" />
+				<menuitem label="LIBRO VENTAS" disabled="true" />
+				<menuitem label="LIBRO MAYOR" disabled="true" />
+				<menuitem label="SUMAS Y SALDOS" disabled="true" />
+				<menuitem label="BALANCE" disabled="true" />
+			</menupopup>
+		</menu>
+
+		<menu id="menuSistemaItems" label="Sistema" iconSclass="z-icon-cog">
+			<menupopup sclass="rounded">
+				<zk forEach="${vm.menuItem(self,'Reportes')}" />
+				<zk forEach="${vm.menuItem(self,'Definiciones')}" />
+				<zk forEach="${vm.menuItem(self,'ConfiguracionUsuariosModulos')}" />
+				<zk forEach="${vm.menuItem(self,'Anulaciones')}" />
+				<zk forEach="${vm.menuItem(self,'AcuseDocumento')}" />
+			</menupopup>
+		</menu>
+
+		<menu label="Tablero" iconSclass="z-icon-desktop">
+			<menupopup sclass="rounded">
+				<menuitem label="IR..."
+					onClick='principalBody.src = "/core/inicio/okLogin.zul";
+				nombreFormulario.value="Bienvenido" ' 
+				iconSclass="z-icon-caret-right"/>
+				<menuitem label="SALIR"
+					href="/sistema.zul"
+					iconSclass="z-icon-caret-right"/>
+			</menupopup>
+		</menu>
+	</menubar>
+
+	<style>
+		.z-menupopup { width: 320px; padding: 10px 3px 10px 3px; background:#f5f5f5 } .z-menupopup .z-menuseparator { border: none; height: 1px; width:280px; margin:10px }
+		.z-menupopup-separator {
+			visibility: hidden;
+		}
+		.z-menu-content, .z-menuitem-content {color:black;margin-left:5px}
+		.z-menuitem-text {margin-left:5px}
+		.z-menu, .z-menuitem { margin: 5px}
+	</style>
+
+</zk>
+
+

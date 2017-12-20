@@ -1,0 +1,189 @@
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.yhaguy.gestion.bancos.conciliacion.BancoConciliacionViewModel')"
+		height="100%" width="100%">
+
+		<grid sclass="vgrid">
+			<rows>
+				<row>
+					<vlayout spacing="0">
+						<field value="Conciliación Nro." />
+						<textbox readonly="true" hflex="true"
+							value="@load(vm.dto.numero)"></textbox>
+					</vlayout>
+					<vlayout spacing="0">
+						<field value="Cuenta" />
+						<textbox readonly="true" hflex="true"
+							value="@load(vm.dto.banco.banco.pos1.toString().toUpperCase())"
+							visible="@load(!vm.dto.esNuevo)">
+						</textbox>
+						<bandbox readonly="true" hflex="true"
+								visible="@load(vm.dto.esNuevo)" id="bndCuenta"
+								value="@load(vm.dto.banco.banco.pos1.toString().toUpperCase())">
+								<bandpopup>
+									<listbox sclass="small-list"
+										width="400px" height="200px" model="@load(vm.bancos)"
+										onSelect="bndCuenta.close()"
+										selectedItem="@bind(vm.dto.banco)">
+										<template name="model">
+											<listitem
+												label="@load(each.banco.pos1.toString().toUpperCase())" />
+										</template>
+									</listbox>
+								</bandpopup>
+						</bandbox>
+					</vlayout>
+					<vlayout spacing="0">
+						<field value="Desde" />
+						<datebox hflex="true"
+							value="@bind(vm.dto.desde)"></datebox>
+					</vlayout>
+					<vlayout spacing="0">
+						<field value="Hasta" />
+						<datebox hflex="true"
+							value="@bind(vm.dto.hasta)"></datebox>
+					</vlayout>
+					<vlayout spacing="0">
+						<field value="Estado" />
+						<textbox hflex="true"
+							value="@load(vm.dto.cerrado? 'CONFIRMADO' : 'PENDIENTE')"
+							readonly="true"></textbox>
+					</vlayout>
+					<vlayout spacing="0">
+						<field value="Sucursal" />
+						<textbox readonly="true" hflex="true"
+							value="@load(vm.dto.sucursal.text.toUpperCase())">
+						</textbox>
+					</vlayout>
+				</row>
+			</rows>
+		</grid>
+		<div height="10px"></div>
+		
+		<solicitarCabecera visible="@load(!vm.detalleVisible)"/>
+		
+		<hbox width="100%" vflex="true" visible="@load(vm.detalleVisible)">
+			<vbox hflex="true" vflex="true">
+				<hlayout sclass="button-container">
+					<button mold="bs" sclass="btn-primary btn-sm"
+						width="170px" iconSclass="z-icon-plus-circle"
+						onClick="@command('importarMovimientos')"
+						label=" Importar Movimientos" />
+					<space />
+					<button mold="bs" sclass="btn-success btn-sm"
+						width="170px" iconSclass="z-icon-check-circle"
+						disabled="@load(!vm.conciliarEnable)"
+						onClick="@command('conciliar')"
+						label=" Conciliar Movimiento" />
+					<space />
+					<button mold="bs" sclass="btn-warning btn-sm"
+						width="170px" iconSclass="z-icon-print"
+						disabled="@load(!vm.siempreHabilitado)"
+						onClick="@command('resumen')"
+						label=" Ver Resumen" />
+				</hlayout>
+				<listbox sclass="small-list" vflex="true"
+					emptyMessage="IMPORTE LOS MOVIMIENTOS DE BANCO.."
+					model="@load(vm.dto.detalles1)"
+					selectedItem="@bind(vm.selectedItem1)"
+					onSelect="@command('selectDetalle2')">
+					<listhead>
+						<listheader width="30px" align="center" sort="auto(conciliado)"></listheader>
+						<listheader label="Número" style="text-align:center" align="right" width="110px"
+							sort="auto(numero)" onCreate='self.sort(true)'/>
+						<listheader label="Descripción" />
+						<listheader label="Importe Gs." style="text-align:center" align="right" width="100px"/>
+					</listhead>
+					<custom-attributes org.zkoss.zul.listbox.autoSort="true" />
+					<template name="model">
+						<listitem>
+							<listcell image="@load(each.conciliado ? '/core/images/accept_.png' : '/core/images/exclamation.png')"></listcell>
+							<listcell label="@load(each.numero)"/>
+							<listcell label="@load(each.descripcion)"/>
+							<listcell label="@load(each.importe) @converter(vm.cnv.monedaLocal)"/>
+						</listitem>
+					</template>
+					<listfoot>
+						<listfooter span="4" align="left">
+							<hlayout>
+								<field value="@load(vm.dto.detalles1.size())" />
+								<field value="ítems" />
+								<space hflex="true"/>
+								<label value="@load(vm.selectedItem1 eq null? '0':'1')" style="color:blue"
+									visible="@load(vm.selectDetalle1)"></label>
+								<label value="coincidencias" style="color:blue"
+									visible="@load(vm.selectDetalle1)"></label>
+								<space hflex="true"></space>
+								<field value="Total Gs." />
+								<guaranibox style="background:#EEF7FA; text-align:right; font-weight:bold" 
+									readonly="true" 
+									value="@load(vm.dto.totalDetalle1)"/>
+								<div width="5px"/>
+							</hlayout>
+						</listfooter>
+					</listfoot>
+				</listbox>
+			</vbox>
+			<vbox hflex="true" vflex="true">
+				<hlayout sclass="button-container">
+					<button mold="bs"
+						upload="true, accept=.csv"
+						onUpload="@command('uploadFile', file=event.media)"
+						disabled="@load(vm.dto.detalles2.size() gt 0 or vm.dto.detalles1.size() eq 0)"
+						width="170px" height="30px" iconSclass="z-icon-upload"
+						label=" Importar Extracto" />
+					<space hflex="true"></space>
+					<button mold="bs" sclass="btn-success btn-sm"
+						width="170px" iconSclass="z-icon-check"
+						disabled="@load(vm.dto.esNuevo() or vm.deshabilitado)"
+						onClick="@command('confirmar')"
+						label=" Confirmar" />
+				</hlayout>
+				<listbox sclass="small-list" vflex="true"
+					emptyMessage="IMPORTE EL ARCHIVO DE EXTRACTO.."
+					model="@load(vm.dto.detalles2)"
+					selectedItem="@bind(vm.selectedItem2)"
+					selectedItems="@bind(vm.selectedItems2)"
+					onSelect="@command('selectDetalle1')"
+					multiple="true">
+					<listhead>
+						<listheader width="30px" align="center" sort="auto(conciliado)"></listheader>
+						<listheader label="Número" style="text-align:center" align="right" width="110px"
+							sort="auto(numero)" onCreate='self.sort(true)'/>
+						<listheader label="Descripción" />
+						<listheader label="Importe Gs." style="text-align:center" align="right" width="100px"/>
+					</listhead>
+					<custom-attributes org.zkoss.zul.listbox.autoSort="true" />
+					<template name="model">
+						<listitem>
+							<listcell image="@load(each.conciliado ? '/core/images/accept_.png' : '/core/images/exclamation.png')"></listcell>
+							<listcell label="@load(each.numero)"/>
+							<listcell label="@load(each.descripcion)"/>
+							<listcell label="@load(each.importe) @converter(vm.cnv.monedaLocal)"/>
+						</listitem>
+					</template>
+					<listfoot>
+						<listfooter span="4" align="left">
+							<hlayout>
+								<field value="@load(vm.dto.detalles2.size())" />
+								<field value="ítems" />
+								<space hflex="true"/>
+								<label value="@load(vm.selectedItems2.size())" style="color:blue"
+									visible="@load(!vm.selectDetalle1)"></label>
+								<label value="coincidencias" style="color:blue"
+									visible="@load(!vm.selectDetalle1)"></label>
+								<space hflex="true"></space>
+								<field value="Total Gs." />
+								<guaranibox style="background:#EEF7FA; text-align:right; font-weight:bold" 
+									readonly="true" 
+									value="@load(vm.dto.totalDetalle2)"/>
+								<div width="5px"/>
+							</hlayout>
+						</listfooter>
+					</listfoot>
+				</listbox>
+			</vbox>
+		</hbox>
+		
+	</window>
+</zk>

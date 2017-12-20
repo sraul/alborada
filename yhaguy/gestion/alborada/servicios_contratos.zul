@@ -1,0 +1,285 @@
+<window apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.yhaguy.gestion.alborada.servicios.ServiciosContratosViewModel')"
+	height="100%">	
+	<div height="5px" />
+	<hlayout sclass="button-container">
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-plus-circle"
+				label=" Agregar" onClick='pop_add.open(self,"after_start")'/>
+		<space></space>
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-edit"
+				label=" Modificar" />
+		<space></space>
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-times-circle"
+				label=" Eliminar" />
+	</hlayout>
+	
+	<listbox sclass="small-list" vflex="true"
+		emptyMessage="INGRESE UN CRITERIO DE BÚSQUEDA.."
+		model="@load(vm.contratos)" selectedItem="@bind(vm.selectedContrato)">
+		<listhead>
+			<listheader label="Fecha" width="150px" />
+			<listheader label="Número" />
+			<listheader label="Titular" />
+			<listheader label="Plan" />
+			<listheader label="Asesor" />
+			<listheader label="Adherentes" width="120px" align="center"/>
+		</listhead>	
+		<auxhead>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Fecha.."
+						sclass="filter"
+						instant="true" 
+						value="@bind(vm.filter_fecha)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Número.."
+						sclass="filter"
+						instant="true"
+						value="@bind(vm.filter_numero)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Titular.."
+						sclass="filter"
+						instant="true"
+						value="@bind(vm.filter_titular)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Plan.."
+						sclass="filter"
+						instant="true"
+						value="@bind(vm.filter_plan)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Asesor.."
+						sclass="filter"
+						instant="true"
+						value="@bind(vm.filter_asesor)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Adherentes.."
+						sclass="filter"
+						instant="true"
+						value="@bind(vm.filter_adherentes)"/>
+				</hlayout>
+			</auxheader>
+		</auxhead>
+		<template name="model">
+			<listitem>
+				<listcell label="@load(each.fecha) @converter('formattedDate', format='dd-MM-yyyy')"></listcell>
+				<listcell label="@load(each.numero)"></listcell>
+				<listcell label="@load(each.titular.razonSocial)"></listcell>
+				<listcell label="@load(each.plan.descripcion)"></listcell>
+				<listcell label="@load(each.asesor.razonSocial)"></listcell>
+				<listcell>
+					<a label="adherentes" onClick="@command('verAdherentes', item=each, parent=self, comp=pop_adherentes)"/>
+				</listcell>
+			</listitem>
+		</template>
+		<listfoot>
+			<listfooter span="2">
+				<hlayout hflex="true">
+					<field value="ítems" />
+				</hlayout>
+			</listfooter>
+		</listfoot>
+	</listbox>
+	
+	<popup id="pop_add" sclass="rounded">
+		<vlayout width="1000px" height="450px">
+			<grid sclass="vgrid">
+				<rows>
+					<row>
+						<vlayout spacing="0">
+							<field value="Fecha" />
+							<datebox hflex="true" value="@bind(vm.n_contrato.fecha)"></datebox>
+						</vlayout>
+						<vlayout spacing="0">
+							<field value="Vencimiento" />
+							<datebox hflex="true" value="@bind(vm.n_contrato.vencimiento)"></datebox>
+						</vlayout>
+						<vlayout spacing="0">
+							<field value="Número" />
+							<textbox hflex="true" value="@bind(vm.n_contrato.numero)"
+								readonly="true"></textbox>
+						</vlayout>
+					</row>
+					<row>
+						<vlayout spacing="0">
+							<field value="Titular" />
+							<bandbox hflex="true" placeholder="Titular.."
+							readonly="true"
+							id="bnd_tit"
+							value="@bind(vm.n_contrato.titular.razonSocial)">
+							<bandpopup>
+								<listbox sclass="small-list"
+									width="930px" height="250px"
+									onSelect="bnd_tit.close()"
+									model="@load(vm.pacientes)"
+									selectedItem="@bind(vm.n_contrato.titular)">
+									<listhead>
+										<listheader width="150px">
+											<textbox hflex="true" sclass="filter" instant="true"
+													placeholder="Cédula.." 
+													value="@bind(vm.filter_cedula_)"/>
+										</listheader>
+										<listheader>
+											<textbox hflex="true" sclass="filter" instant="true"
+													placeholder="Nombre y Apellido.." 
+													value="@bind(vm.filter_razonsocial_)"/>
+										</listheader>
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="@load(each.ruc)"/>
+											<listcell label="@load(each.razonSocial)"/>
+										</listitem>
+									</template>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+						</vlayout>
+						<vlayout spacing="0">
+							<field value="Asesor" />
+							<combobox value="@load(vm.n_contrato.asesor.razonSocial)"
+								model="@load(vm.asesores)"
+								instant="true" hflex="true"
+								selectedItem="@bind(vm.n_contrato.asesor)">
+								<template name="model">
+									<comboitem label="@load(each.razonSocial)"/>
+								</template>	
+							</combobox>
+						</vlayout>
+						<hlayout>
+							<vlayout spacing="0" hflex="true">
+								<field value="Plan" />
+								<combobox value="@load(vm.n_contrato.plan.descripcion)"
+									model="@load(vm.planes)"
+									instant="true" hflex="true"
+									selectedItem="@bind(vm.n_contrato.plan)">
+									<template name="model">
+										<comboitem label="@load(each.descripcion)"/>
+									</template>	
+								</combobox>
+							</vlayout>
+							<vlayout spacing="0">
+								<field value="Cuotas" />
+								<spinner value="@bind(vm.n_contrato.cuotas)"></spinner>
+							</vlayout>
+						</hlayout>						
+					</row>
+				</rows>
+			</grid>
+			<listbox sclass="small-list" vflex="true"
+				model="@load(vm.n_contrato.adherentes)">
+				<listhead>
+					<listheader label="Cédula" width="100px"></listheader>
+					<listheader label="Nombre y Apellido"></listheader>
+					<listheader width="50px" align="center"></listheader>
+				</listhead>
+				<auxhead>
+					<auxheader colspan="2">
+						<bandbox hflex="true" placeholder="Adherente.."
+							readonly="true"
+							id="bndAdhe"
+							value="@load(vm.selectedAdherente.razonSocial)">
+							<bandpopup>
+								<listbox sclass="small-list"
+									width="930px" height="250px"
+									onSelect="bndAdhe.close()"
+									model="@load(vm.pacientes)"
+									selectedItem="@bind(vm.selectedAdherente)">
+									<listhead>
+										<listheader width="150px">
+											<textbox hflex="true" sclass="filter" instant="true"
+													placeholder="Cédula.." 
+													value="@bind(vm.filter_cedula_)"/>
+										</listheader>
+										<listheader>
+											<textbox hflex="true" sclass="filter" instant="true"
+													placeholder="Nombre y Apellido.." 
+													value="@bind(vm.filter_razonsocial_)"/>
+										</listheader>
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="@load(each.ruc)"/>
+											<listcell label="@load(each.razonSocial)"/>
+										</listitem>
+									</template>
+								</listbox>
+							</bandpopup>
+						</bandbox>
+					</auxheader>
+					<auxheader>
+						<button iconSclass="z-icon-plus" onClick="@command('addAdherente')"/>
+					</auxheader>
+				</auxhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.ruc)"></listcell>
+						<listcell label="@load(each.razonSocial)"></listcell>
+						<listcell />
+					</listitem>
+				</template>
+				<listfoot>
+					<listfooter>
+						<hlayout>
+							<field value="ítems"/>
+						</hlayout>
+					</listfooter>
+				</listfoot>
+			</listbox>
+			<hbox style="padding:5px" align="end" hflex="true" pack="end">
+				<button mold="bs" sclass="btn-success btn-sm"
+					iconSclass="z-icon-check" width="100px"
+					onClick="@command('addContrato', comp=pop_add)"/>
+			</hbox>
+		</vlayout>
+	</popup>
+	
+	<popup id="pop_adherentes" sclass="rounded">
+		<hlayout>
+			<field value="ADHERENTES AL CONTRATO" />
+			<div hflex="true"></div>
+			<button iconSclass="z-icon-times" onClick='pop_adherentes.close()'></button>
+		</hlayout>
+		<div height="5px"></div>
+		<listbox width="600px" height="150px" sclass="small-list"
+			model="@load(vm.selectedContrato.adherentes)">
+			<listhead>
+				<listheader label="Cédula" width="110px"></listheader>
+				<listheader label="Nombre y Apellido.."></listheader>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@load(each.ruc)"/>
+					<listcell label="@load(each.razonSocial)" />
+				</listitem>
+			</template>
+		</listbox>
+	</popup>
+	
+	<style>
+		.custom-tbox {margin-right:5px; background:lightyellow}
+	</style>
+</window>

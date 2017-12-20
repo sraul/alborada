@@ -1,0 +1,162 @@
+<window apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.yhaguy.gestion.alborada.comisiones.ComisionesViewModel')"
+	height="100%">	
+	<div height="5px" />
+	
+	<hlayout sclass="button-container">
+		<button mold="bs" sclass="btn-primary btn-sm" width="150px"
+				iconSclass="z-icon-download"
+				label=" Reporte" 
+				onClick="@command('reporte')"/>
+		<space></space>
+		<label value="VENCIMIENTO MAYOR A:" />
+		<longbox sclass="filter" style="text-align:left"
+			instant="true" value="@bind(vm.filter_dias)"></longbox>
+		<label value="DÍAS.."></label>
+	</hlayout>
+	
+	<listbox sclass="small-list" vflex="true"
+		emptyMessage="INGRESE UN CRITERIO DE BÚSQUEDA.."
+		model="@load(vm.comisiones)">
+		<listhead>
+			<listheader label="Usuario" />
+			<listheader label="Cédula" align="right" width="110px"/>
+			<listheader label="Cuota" align="right" width="70px"/>
+			<listheader label="Vencimiento" width="110px"/>
+			<listheader label="Dias Vto." width="100px" align="right"/>
+			<listheader label="Importe" width="100px" align="right"/>
+			<listheader label="Vendedor"/>
+			<listheader label="Celular" align="right"/>
+			<listheader label="Particular" align="right"/>
+			<listheader label="Laboral" align="right"/>
+		</listhead>	
+		<auxhead>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Usuario.."
+						sclass="filter"
+						instant="true"
+						value="@bind(vm.filter_nombre)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Cédula.."
+						sclass="filter"
+						instant="true"
+						value="@bind(vm.filter_cedula)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Cuota.."
+						sclass="filter"
+						instant="true" 
+						value="@bind(vm.filter_cuota)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Vencimiento.."
+						sclass="filter"
+						instant="true" 
+						value="@bind(vm.filter_vencimiento)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader></auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Importe.."
+						sclass="filter"
+						instant="true" 
+						readonly="true"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Vendedor.."
+						sclass="filter"
+						instant="true" 
+						value="@bind(vm.filter_vendedor)"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Celular.."
+						sclass="filter"
+						instant="true" 
+						readonly="true"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Particular.."
+						sclass="filter"
+						instant="true" 
+						readonly="true"/>
+				</hlayout>
+			</auxheader>
+			<auxheader>
+				<hlayout>
+					<textbox hflex="true" 
+						placeholder="Laboral.."
+						sclass="filter"
+						instant="true" 
+						readonly="true"/>
+				</hlayout>
+			</auxheader>
+		</auxhead>
+		<template name="model">
+			<listitem>
+				<listcell label="@load(each.nombre_apellido)"></listcell>
+				<listcell label="@load(each.cedula)"></listcell>
+				<listcell label="@load(each.nro_cuota)"></listcell>
+				<listcell label="@load(each.fecha_vencimiento_)"></listcell>
+				<listcell label="@load(each.diasVencimiento)"></listcell>
+				<listcell label="@load(each.importe) @converter(vm.cnv.monedaLocal)"></listcell>
+				<listcell label="@load(each.vendedor.toUpperCase())"></listcell>
+				<listcell>
+					<hlayout>
+						<label hflex="true" value="@load(each.celular)"></label>
+						<label hflex="true" value="@load(each.celular_2)"></label>
+					</hlayout>
+				</listcell>
+				<listcell>
+					<hlayout>
+						<label hflex="true" value="@load(each.tel_particular)"></label>
+						<label hflex="true" value="@load(each.tel_particular_2)"></label>
+					</hlayout>
+				</listcell>
+				<listcell>
+					<hlayout>
+						<label hflex="true" value="@load(each.tel_laboral)"></label>
+						<label hflex="true" value="@load(each.tel_laboral_2)"></label>
+					</hlayout>
+				</listcell>
+			</listitem>
+		</template>
+		<listfoot>
+			<listfooter span="6">
+				<hlayout>
+					<field value="ítems" />
+					<space hflex="true"></space>
+					<field value="Total Importe:" />
+					<guaranibox style="text-align:right;background:#EEF7FA;font-weight:bold"
+						value="@load(vm.totalImporte)"/>
+				</hlayout>
+			</listfooter>
+		</listfoot>
+	</listbox>
+	
+	<style>
+		.custom-tbox {margin-right:5px; background:lightyellow}
+	</style>
+</window>
