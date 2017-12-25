@@ -1,0 +1,12 @@
+<div sclass="inicio" height="98%">
+	<label value="" style="font-size:14pt;font-weight:bold"/>
+	<style>
+		.z-include { overflow: hidden; } .z-notification
+		.z-notification-content { 
+			font-size: 14px; font-weight: normal;
+			margin: 0 !important; overflow: hidden; color: white; 
+			width: 350px; min-height: 200px; 
+			white-space: pre;
+		}
+	</style>
+</div>
