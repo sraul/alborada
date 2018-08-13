@@ -39,6 +39,7 @@ public class PacientesViewModel extends SimpleViewModel {
 	
 	private Empresa n_empresa = new Empresa();
 	private Cliente n_paciente = new Cliente();
+	private ServicioFicha n_ficha = new ServicioFicha();
 	private Cliente selectedPaciente;
 	
 	private ServicioContrato selectedContrato;
@@ -75,6 +76,17 @@ public class PacientesViewModel extends SimpleViewModel {
 		rr.saveObject(this.n_paciente, this.getLoginNombre());
 		this.n_paciente = new Cliente();
 		this.n_empresa = new Empresa();
+		comp.close();
+		Clients.showNotification("REGISTRO AGREGADO..");
+	}
+	
+	@Command
+	@NotifyChange("*")
+	public void addFicha(@BindingParam("comp") Popup comp) throws Exception {
+		RegisterDomain rr = RegisterDomain.getInstance();
+		this.n_ficha.setCliente(this.selectedPaciente);
+		rr.saveObject(this.n_ficha, this.getLoginNombre());
+		this.n_ficha = new ServicioFicha();
 		comp.close();
 		Clients.showNotification("REGISTRO AGREGADO..");
 	}
@@ -338,5 +350,13 @@ public class PacientesViewModel extends SimpleViewModel {
 
 	public void setSelectedFicha(ServicioFicha selectedFicha) {
 		this.selectedFicha = selectedFicha;
+	}
+
+	public ServicioFicha getN_ficha() {
+		return n_ficha;
+	}
+
+	public void setN_ficha(ServicioFicha n_ficha) {
+		this.n_ficha = n_ficha;
 	}
 }
