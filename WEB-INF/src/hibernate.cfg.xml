@@ -12,7 +12,7 @@
 		<property name="connection.url">jdbc:postgresql://localhost:5432/alboradadb</property>
 
 		<property name="connection.username">postgres</property>
-		<property name="connection.password">postgres</property>
+		<property name="connection.password">ybsa0985</property>
 
 		<!-- Fin Postgres -->
 
