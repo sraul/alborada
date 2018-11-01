@@ -26,7 +26,7 @@ public class DebitoComandado extends Domain {
 	private String ICDSRV = "EA5";
 	private String ICTDEB;
 	private String IBCOCR = "017";
-	private String ICTCRE = "400267575";
+	private String ICTCRE = "29450239";
 	private String ITCRDB = "C";
 	private String IORDEN;
 	private String IMONED = "0";
